@@ -31,7 +31,16 @@ function App() {
     const renderSymbol = (symbol) => <span className={`symbol ${getSymbolClassName(symbol)}`}>{symbol}</span>
 
     const handleCellClick = (index) => {
-        
+        /*We can click only empty sections*/
+        if(cells[index]){
+            return;
+        }
+
+        const cellsCopy = cells.slice();
+        cellsCopy[index] = currentStep;
+        setCells(cellsCopy);
+        currentStep === SYMBOL_O ? setCurrenstStep(SYMBOL_X) : setCurrenstStep(SYMBOL_O)
+
     };
 
     return (
