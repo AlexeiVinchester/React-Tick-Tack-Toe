@@ -1,7 +1,7 @@
 const SYMBOL_X = 'X';
 const SYMBOL_O = 'O';
 
-const computeWinner = (cell) => {
+const computeWinner = (cells) => {
     const lines = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
         [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -14,12 +14,12 @@ const computeWinner = (cell) => {
         one line
     */
 
-    for(let i = 0; i < lines.length; i++){
-        const [a, b ,c] = lines[i];
-        if(
-            cell[a] && 
-            cell[a] === cell[b] &&
-            cell[a] === cell[c]
+    for (let i = 0; i < lines.length; i++) {
+        const [a, b, c] = lines[i];
+        if (
+            cells[a] &&
+            cells[a] === cells[b] &&
+            cells[a] === cells[c]
         ) {
             return [a, b, c];
         }
@@ -37,15 +37,15 @@ function App() {
     */
     const [cells, setCells] = React.useState([null, null, null, null, null, null, null, null, null]);
     const [currentStep, setCurrenstStep] = React.useState(SYMBOL_O);
-
+    const [winerSequence, setWinnerSequence] = React.useState(null);
     /*
       this function recognises class of Symbol and returnes
       string of needed class, which then we will install in span element
     */
 
     const getSymbolClassName = (symbol) => {
-      if(symbol === SYMBOL_O) return 'symbol--o';
-      if(symbol === SYMBOL_X) return 'symbol--x';
+        if (symbol === SYMBOL_O) return 'symbol--o';
+        if (symbol === SYMBOL_X) return 'symbol--x';
     }
 
     /*
@@ -58,33 +58,41 @@ function App() {
 
     const handleCellClick = (index) => {
         /*We can click only empty sections*/
-        if(cells[index]){
+        if (cells[index]) {
             return;
         }
 
         const cellsCopy = cells.slice();
         cellsCopy[index] = currentStep;
+        const winner = computeWinner(cellsCopy)
+
         setCells(cellsCopy);
-        setCurrenstStep(currentStep === SYMBOL_O ? SYMBOL_X: SYMBOL_O);
+        setCurrenstStep(currentStep === SYMBOL_O ? SYMBOL_X : SYMBOL_O);
+        setWinnerSequence(winner)
     };
 
     return (
-      <div className="game>">
-        <div className="game-info">
-          Ход: {renderSymbol(currentStep)}
+        <div className="game>">
+            <div className="game-info">
+                Ход: {renderSymbol(currentStep)}
+            </div>
+            <div className="game-field">
+                {cells.map((symbol, index) => {
+                    const isWinner = winerSequence?.includes(index);
+                    return (
+                        <button
+                            key={index}
+                            className={`cell ${isWinner ? 'cell--win' : ''}`}
+                            onClick={() => handleCellClick(index)}
+                        >
+                            {
+                                symbol ? renderSymbol(symbol) : null
+                            }
+                        </button>
+                    )
+                })}
+            </div>
         </div>
-        <div className="game-field">
-          {cells.map((symbol, index) => {
-            return (
-              <button key={index} className="cell" onClick={() => handleCellClick(index)}> 
-                {
-                  symbol ? renderSymbol(symbol) : null
-                }
-              </button>
-          )
-          })}
-        </div>
-      </div>
     );
 }
 
