@@ -1,7 +1,33 @@
 const SYMBOL_X = 'X';
 const SYMBOL_O = 'O';
 
+const computeWinner = (cell) => {
+    const lines = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+    ];
+
+    /*
+        Here we check values at lines of indexes in our game field,
+        if they are the same, return array of this indexes in 
+        one line
+    */
+
+    for(let i = 0; i < lines.length; i++){
+        const [a, b ,c] = lines[i];
+        if(
+            cell[a] && 
+            cell[a] === cell[b] &&
+            cell[a] === cell[c]
+        ) {
+            return [a, b, c];
+        }
+    }
+}
+
 function App() {
+
 
     /*
         React.useState() get param, which is a default value for state;
@@ -39,8 +65,7 @@ function App() {
         const cellsCopy = cells.slice();
         cellsCopy[index] = currentStep;
         setCells(cellsCopy);
-        currentStep === SYMBOL_O ? setCurrenstStep(SYMBOL_X) : setCurrenstStep(SYMBOL_O)
-
+        setCurrenstStep(currentStep === SYMBOL_O ? SYMBOL_X: SYMBOL_O);
     };
 
     return (
