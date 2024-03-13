@@ -13,74 +13,11 @@
   </head>
 
   <body>
-    <!--<div className="game>">
-    <div className="game-info">
-      Ход: <span className="symbol symbol--x">X</span>
-    </div>
-    <div className="game-field">
-      <button className="cell cell--win"><span className="symbol symbol--x">X</span></button>
-      <button className="cell"><span className="symbol symbol--o">O</span></button>
-      <button className="cell"></button>
-      <button className="cell cell--win"><span className="symbol symbol--x">X</span></button>
-      <button className="cell"></button>
-      <button className="cell cell--win"><span className="symbol symbol--x">X</span></button>
-      <button className="cell cell--win"><span className="symbol symbol--x">X</span></button>
-      <button className="cell cell--win"><span className="symbol symbol--x">X</span></button>
-      <button className="cell"></button>
-    </div>
-  </div>-->
 
     <div id="root"></div>
 
-    <script type="text/babel">
+    <script type="text/babel" src="script.js">
 
-      const SYMBOL_X = 'X';
-      const SYMBOL_O = 'O';
-
-      function App() {
-
-        const cells = [null, 
-                       null, 
-                       null, 
-                       SYMBOL_O, 
-                       SYMBOL_X,
-                       SYMBOL_O, 
-                       null,
-                       SYMBOL_X,
-                       null]
-
-        const currentStep = SYMBOL_O;
-        const getSymbolClassName = (symbol) => {
-          if(symbol === SYMBOL_O) return 'symbol--o';
-          if(symbol === SYMBOL_X) return 'symbol--x';
-        }
-
-        const renderSymbol = (symbol) => <span className={`symbol ${getSymbolClassName(symbol)}`}>{symbol}</span>
-
-        return (
-          <div className="game>">
-            <div className="game-info">
-              Ход: {renderSymbol(currentStep)}
-            </div>
-            <div className="game-field">
-              {cells.map((symbol, index) => {
-                return (
-                  <button key={index} className="cell">
-                    {
-                      symbol ? renderSymbol(symbol) : null
-                    }
-                  </button>
-              )
-              })}
-
-            </div>
-          </div>
-        );
-      }
-
-      const root = ReactDOM.createRoot(document.getElementById("root"));
-
-      root.render(<App />);
     </script>
     <style>
       html {
