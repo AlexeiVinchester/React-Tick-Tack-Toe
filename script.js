@@ -37,7 +37,7 @@ function App() {
     */
     const [cells, setCells] = React.useState([null, null, null, null, null, null, null, null, null]);
     const [currentStep, setCurrenstStep] = React.useState(SYMBOL_O);
-    const [winerSequence, setWinnerSequence] = React.useState(null);
+    const [winnerSequence, setWinnerSequence] = React.useState(null);
     /*
       this function recognises class of Symbol and returnes
       string of needed class, which then we will install in span element
@@ -71,14 +71,17 @@ function App() {
         setWinnerSequence(winner)
     };
 
+    const winnerSymbol = winnerSequence ? cells[winnerSequence[0]] : undefined;
+
+
     return (
         <div className="game>">
             <div className="game-info">
-                Ход: {renderSymbol(currentStep)}
+                {winnerSequence ? 'Winner' : `Next:`} {renderSymbol(winnerSymbol ?? currentStep)}
             </div>
             <div className="game-field">
                 {cells.map((symbol, index) => {
-                    const isWinner = winerSequence?.includes(index);
+                    const isWinner = winnerSequence?.includes(index);
                     return (
                         <button
                             key={index}
