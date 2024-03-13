@@ -71,11 +71,18 @@ function App() {
         setWinnerSequence(winner)
     };
 
+    const resetGame = () => {
+        const cellsCopy = cells.slice();
+        setCells(cellsCopy.map(item => null));
+        setWinnerSequence(null);
+    }
+
     const winnerSymbol = winnerSequence ? cells[winnerSequence[0]] : undefined;
 
 
+
     return (
-        <div className="game>">
+        <div className="game">
             <div className="game-info">
                 {winnerSequence ? 'Winner' : `Next:`} {renderSymbol(winnerSymbol ?? currentStep)}
             </div>
@@ -95,6 +102,12 @@ function App() {
                     )
                 })}
             </div>
+            <button 
+                className='reset-button' 
+                onClick={() => resetGame()}
+                >
+                    Reset
+            </button>
         </div>
     );
 }
