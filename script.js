@@ -36,8 +36,10 @@ function App() {
         setState - function, which helps to change state;
     */
     const [cells, setCells] = React.useState([null, null, null, null, null, null, null, null, null]);
-    const [currentStep, setCurrenstStep] = React.useState(SYMBOL_O);
+    const [currentStep, setCurrentStep] = React.useState(SYMBOL_O);
     const [winnerSequence, setWinnerSequence] = React.useState(null);
+    const [drawFinish, setDrawFinish] = React.useState(null);
+
     /*
       this function recognises class of Symbol and returnes
       string of needed class, which then we will install in span element
@@ -56,35 +58,38 @@ function App() {
 
     const renderSymbol = (symbol) => <span className={`symbol ${getSymbolClassName(symbol)}`}>{symbol}</span>
 
-    const handleCellClick = (index) => {
-        /*We can click only empty sections*/
-        if (cells[index] ||winnerSequence) {
+    const winnerSymbol = winnerSequence ? cells[winnerSequence[0]] : undefined;
+
+    function handleCellClick(index) {
+        if (cells[index] || winnerSequence) {
             return;
         }
 
         const cellsCopy = cells.slice();
         cellsCopy[index] = currentStep;
-        const winner = computeWinner(cellsCopy)
+        const winner = computeWinner(cellsCopy);
+
+        if (!cellsCopy.includes(null) && !winnerSequence) {
+            setDrawFinish(true);
+        }
 
         setCells(cellsCopy);
-        setCurrenstStep(currentStep === SYMBOL_O ? SYMBOL_X : SYMBOL_O);
-        setWinnerSequence(winner)
-    };
+        setCurrentStep(currentStep === SYMBOL_O ? SYMBOL_X : SYMBOL_O);
+        setWinnerSequence(winner);
 
-    const resetGame = () => {
+    }
+
+    function resetGameClick() {
         const cellsCopy = cells.slice();
         setCells(cellsCopy.map(item => null));
         setWinnerSequence(null);
+        setDrawFinish(null);
     }
-
-    const winnerSymbol = winnerSequence ? cells[winnerSequence[0]] : undefined;
-
-
 
     return (
         <div className="game">
             <div className="game-info">
-                {winnerSequence ? 'Winner' : `Next:`} {renderSymbol(winnerSymbol ?? currentStep)}
+                {winnerSequence ? 'Winner: ' : (drawFinish ? 'Draw' : 'Next: ')} {renderSymbol(winnerSymbol ?? drawFinish ?? currentStep)}
             </div>
             <div className="game-field">
                 {cells.map((symbol, index) => {
@@ -102,11 +107,11 @@ function App() {
                     )
                 })}
             </div>
-            <button 
-                className='reset-button' 
-                onClick={() => resetGame()}
-                >
-                    Reset
+            <button
+                className='reset-button'
+                onClick={() => resetGameClick()}
+            >
+                Reset
             </button>
         </div>
     );
