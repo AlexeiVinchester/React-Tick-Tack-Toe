@@ -58,7 +58,7 @@ function App() {
 
     const handleCellClick = (index) => {
         /*We can click only empty sections*/
-        if (cells[index]) {
+        if (cells[index] ||winnerSequence) {
             return;
         }
 
