@@ -54,8 +54,8 @@ function App() {
 
     return (
         <div className="game">
-            <GameInfo  
-                isDraw={isDraw} 
+            <GameInfo
+                isDraw={isDraw}
                 winnerSymbol={winnerSymbol}
                 currentStep={currentStep}
             />
@@ -63,7 +63,7 @@ function App() {
                 {cells.map((symbol, index) => {
                     const isWinner = winnerSequence?.includes(index);
                     return (
-                        <GameCell 
+                        <GameCell
                             isWinner={isWinner}
                             onClick={() => handleCellClick(index)}
                             symbol={symbol}
@@ -82,28 +82,28 @@ function App() {
     );
 }
 
-function GameInfo({ isDraw, winnerSymbol, currentStep }){
-    
-    if(isDraw){
+function GameInfo({ isDraw, winnerSymbol, currentStep }) {
+
+    if (isDraw) {
         return <div className="game-info">'Draw'</div>
     }
 
-    if (winnerSymbol){
+    if (winnerSymbol) {
         return (
             <div className="game-info">
-                'Winner: ' <GameSymbol symbol={winnerSymbol}/>
+                'Winner: ' <GameSymbol symbol={winnerSymbol} />
             </div>
         );
     }
 
     return (
         <div className="game-info">
-            'Step: ' <GameSymbol symbol={currentStep}/>
+            'Step: ' <GameSymbol symbol={currentStep} />
         </div>
     );
 }
 
-function GameSymbol({ symbol }){
+function GameSymbol({ symbol }) {
     const getSymbolClassName = (symbol) => {
         if (symbol === SYMBOL_O) return 'symbol--o';
         if (symbol === SYMBOL_X) return 'symbol--x';
@@ -111,7 +111,7 @@ function GameSymbol({ symbol }){
     return <span className={`symbol ${getSymbolClassName(symbol)}`}>{symbol}</span>
 }
 
-function GameCell({ isWinner, onClick, symbol, index}){
+function GameCell({ isWinner, onClick, symbol, index }) {
     return (
         <button
             key={index}
@@ -119,11 +119,11 @@ function GameCell({ isWinner, onClick, symbol, index}){
             onClick={onClick}
         >
             {
-                symbol ? <GameSymbol symbol={symbol}/> : null
+                symbol ? <GameSymbol symbol={symbol} /> : null
             }
         </button>
     )
-    
+
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
