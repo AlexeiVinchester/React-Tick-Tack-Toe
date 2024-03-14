@@ -20,8 +20,7 @@ const computeWinner = (cells) => {
     }
 }
 
-function App() {
-
+function useGameState(){
     const [cells, setCells] = React.useState([null, null, null, null, null, null, null, null, null]);
     const [currentStep, setCurrentStep] = React.useState(SYMBOL_O);
     const [winnerSequence, setWinnerSequence] = React.useState(null);
@@ -51,6 +50,28 @@ function App() {
         setWinnerSequence(null);
     }
 
+    return {
+        cells,
+        currentStep,
+        winnerSequence,
+        winnerSymbol,
+        handleCellClick,
+        resetGameClick,
+        isDraw
+    }
+}
+
+function App() {
+
+    const {
+        cells,
+        currentStep,
+        winnerSequence,
+        winnerSymbol,
+        handleCellClick,
+        resetGameClick,
+        isDraw
+    } = useGameState();
 
     return (
         <div className="game">
