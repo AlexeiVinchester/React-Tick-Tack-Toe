@@ -20,13 +20,11 @@ const computeWinner = (cells) => {
     }
 }
 
-function useGameState(){
+function useGameState() {
     const [cells, setCells] = React.useState([null, null, null, null, null, null, null, null, null]);
     const [currentStep, setCurrentStep] = React.useState(SYMBOL_O);
     const [winnerSequence, setWinnerSequence] = React.useState(null);
-
     const winnerSymbol = winnerSequence ? cells[winnerSequence[0]] : undefined;
-
     const isDraw = !winnerSequence && !cells.includes(null);
 
     function handleCellClick(index) {
@@ -41,7 +39,6 @@ function useGameState(){
         setCells(cellsCopy);
         setCurrentStep(currentStep === SYMBOL_O ? SYMBOL_X : SYMBOL_O);
         setWinnerSequence(winner);
-
     }
 
     function resetGameClick() {
@@ -62,7 +59,6 @@ function useGameState(){
 }
 
 function App() {
-
     const {
         cells,
         currentStep,
@@ -104,7 +100,6 @@ function App() {
 }
 
 function GameInfo({ isDraw, winnerSymbol, currentStep }) {
-
     if (isDraw) {
         return <div className="game-info">'Draw'</div>
     }
@@ -129,6 +124,7 @@ function GameSymbol({ symbol }) {
         if (symbol === SYMBOL_O) return 'symbol--o';
         if (symbol === SYMBOL_X) return 'symbol--x';
     }
+    
     return <span className={`symbol ${getSymbolClassName(symbol)}`}>{symbol}</span>
 }
 
